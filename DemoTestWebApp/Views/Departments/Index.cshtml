@@ -1,0 +1,45 @@
+﻿@model List<Department>
+<h2>Departments</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Department Name</th>
+            <th>Department Logo</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var department in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => department.Name)
+                </td>
+                <td>
+                    <img src="@department.Logo" alt="Logo" style="max-width: 100px; max-height: 100px;" />
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@department.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@department.Id">Delete</a>
+                </td>
+            </tr>
+            @foreach (var subDepartment in department.SubDepartments)
+            {
+                <tr>
+                    <td>
+                        &nbsp;&nbsp;&nbsp;&nbsp;@subDepartment.Name
+                    </td>
+                    <td>
+                        <img src="@subDepartment.Logo" alt="Logo" style="max-width: 100px; max-height: 100px;" />
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@subDepartment.Id">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@subDepartment.Id">Delete</a>
+                    </td>
+                </tr>
+                <!-- Add more levels as needed -->
+            }
+        }
+    </tbody>
+</table>
+<a asp-action="Create">Create New</a>

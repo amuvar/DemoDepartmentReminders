@@ -1,0 +1,61 @@
+﻿@model Department
+
+@{
+    ViewData["Title"] = "Edit Department";
+}
+
+<h1>Edit Department</h1>
+
+<form asp-action="Edit" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="Id" class="control-label"></label>
+        <input asp-for="Id" class="form-control" readonly />
+        <span asp-validation-for="Id" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Logo" class="control-label"></label>
+        <input asp-for="Logo" class="form-control" placeholder="Enter logo URL" />
+        <span asp-validation-for="Logo" class="text-danger"></span>
+        <small class="form-text text-muted">Update the logo image URL.</small>
+    </div>
+    <div class="form-group">
+        <label for="LogoUpload">Upload Logo (Optional)</label>
+        <input type="file" id="LogoUpload" name="LogoUpload" class="form-control" accept="image/*" />
+        <small class="form-text text-muted">Upload a new logo image.</small>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ParentDepartmentId" class="control-label"></label>
+        <select asp-for="ParentDepartmentId" class="form-control" asp-items="@ViewBag.ParentDepartments">
+            <option value="">-- Select Parent Department --</option>
+        </select>
+        <span asp-validation-for="ParentDepartmentId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+<div>
+    <h3>Current Logo</h3>
+    @if (!string.IsNullOrEmpty(Model.Logo))
+    {
+        <img src="@Model.Logo" alt="Current Logo" style="max-width: 200px;" />
+    }
+    else
+    {
+        <p>No logo available.</p>
+    }
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
